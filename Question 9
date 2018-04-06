@@ -1,0 +1,83 @@
+#include<iostream>
+#include<conio.h>
+#include<algorithm>
+using namespace std;
+struct prior{
+	int arrival_time;
+	int burst_time;
+	int priority;
+	int process_id;
+	int wait_array;
+}s[10];
+
+
+
+bool process_sort_priority(prior a, prior b)
+{
+	return a.priority < b.priority;
+}
+
+
+
+int main()
+{
+	int n,i,j,k,total,a;
+	cout<<"Enter the number of processes:\n";
+	cin>>n;	
+	cout<<"Enter the arrival time:\n";
+	for(i=0;i<n;i++)
+	{
+		cout<<"Enter the arrival time"<<i+1<<":"<<endl;
+		cin>>s[i].arrival_time;
+		s[i].process_id = i+1;
+	}
+
+	cout<<"Enter the burst time :\n";
+	for(i=0;i<n;i++)
+	{
+		cout<<"Enter the burst time"<<i+1<<":"<<endl;
+		cin>>s[i].burst_time;
+	}
+	cout<<"Enter the priority :\n";
+	for(i=0;i<n;i++)
+	{
+		cout<<"Enter the priority "<<i+1<<":"<<endl;
+		cin>>s[i].priority;
+	}
+	sort(s,s+n,process_sort_priority);
+	cout<<"Process_ID"<<"\t"<<"ARRIVAL TIME"<<"\t"<<"BURST TIME"<<"\t"<<"Priority"<<endl;
+	for(i=0;i<n;i++)
+	{
+		cout<<s[i].process_id<<"\t\t"<<s[i].arrival_time<<"\t\t"<<s[i].burst_time<<"\t\t"<<s[i].priority<<endl;
+	}
+
+			
+	s[0].wait_array=0; 
+    for(i=0;i<n;i++)
+    {
+        s[i].wait_array=0;
+        for(j=0;j<i;j++)
+        {
+        	s[i].wait_array+=s[j].burst_time;
+        }
+            
+ 
+        total+=s[i].wait_array;
+    }
+ 	int avg_waiting_time;
+    avg_waiting_time=total/n;      
+	cout<<"Process_ID"<<"\t"<<"ARRIVAL TIME"<<"\t"<<"BURST TIME"<<"\t"<<"Priority"<<"\t"<<"Waiting Time"<<endl;
+	for(i=0;i<n;i++)
+	{
+		
+		cout<<s[i].process_id<<"\t\t"<<s[i].arrival_time<<"\t\t"<<s[i].burst_time<<"\t\t"<<s[i].priority<<"\t\t"<<s[i].wait_array<<endl;
+		
+		
+	}
+	
+
+    cout<<" Average Waiting Time="<<avg_waiting_time;
+    
+ 
+    return 0;
+}
